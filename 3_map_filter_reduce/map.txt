@@ -1,0 +1,45 @@
+# map
+- 이터러블 => 이터러블
+- 서로 1대1 매핑되는 이터러블간의 변환
+
+const products = [
+  {name: 'a', price: 15000},
+  {name: 'b', price: 25000},  
+  {name: 'c', price: 35000},
+  {name: 'd', price: 45000},
+  {name: 'e', price: 55000},
+]
+
+
+let names = []
+for(const p of products) {
+  names.push(p.name)
+} // 명시적 
+
+let names = products.map(({name}) => name) // 선언적
+// array에는 map이 구현되어 있다.
+
+----------------------------------------------------
+
+const map = (f, iter) => {
+  let res = []
+  for(const a of iter) {
+    res.push(f(a))
+  }
+  return res
+}
+map(p => p.name, products)
+
+
+위에서 구현된 map은 이터러블 프로토콜을 따라 다형성이 높다.
+
+document.querySelectorAll('*').map(el => el.nodeName) // Array를 상속 x
+map(el => el.nodeName, document.querySelectorAll('*'))
+
+
+function *gen() {
+  yield 2
+  yield 3
+  yield 4
+}
+console.log(map(a => a * a, gen())) // 4, 9 ,16
