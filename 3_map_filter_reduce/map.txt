@@ -21,6 +21,8 @@ let names = products.map(({name}) => name) // 선언적
 
 ----------------------------------------------------
 
+# 위에서 구현된 map은 이터러블 프로토콜을 따라 다형성이 높다.
+
 const map = (f, iter) => {
   let res = []
   for(const a of iter) {
@@ -31,10 +33,8 @@ const map = (f, iter) => {
 map(p => p.name, products)
 
 
-위에서 구현된 map은 이터러블 프로토콜을 따라 다형성이 높다.
-
 document.querySelectorAll('*').map(el => el.nodeName) // Array를 상속 x
-map(el => el.nodeName, document.querySelectorAll('*'))
+map(el => el.nodeName, document.querySelectorAll('*')) // 이터러블 프로토콜을 따름
 
 
 function *gen() {
@@ -43,3 +43,11 @@ function *gen() {
   yield 4
 }
 console.log(map(a => a * a, gen())) // 4, 9 ,16
+
+
+
+let m = new Map()
+m.set('a', 10)
+m.set('b', 20)
+const it = m[Symbol.iterator]()
+map(([k, a]) => [k, a * 2], m)

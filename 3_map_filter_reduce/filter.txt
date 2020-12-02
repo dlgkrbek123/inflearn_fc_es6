@@ -1,0 +1,40 @@
+const products = [
+  {name: 'z', price: 5000},
+  {name: 'a', price: 15000},
+  {name: 'b', price: 25000},  
+  {name: 'c', price: 35000},
+  {name: 'd', price: 45000},
+  {name: 'e', price: 55000},
+]
+
+# filter는 순회가능한 요소를 특정조건으로 걸러내는데 사용
+
+let under20000 = []
+
+for(const p of products) {
+  if(p.price < 20000) {
+    under20000.push(p)
+  }
+}
+console.log(...under20000)
+
+----------------------------------------------------
+
+const filter = (f, iter) => {
+  const result = []
+  for(const a of iter) {
+    f(a) ? result.push(a) : null     
+  }
+  return result
+}
+// map과 마찬가지로 함수를 받아 위임해서 호출!
+
+filter(p => p.price < 20000, products)
+filter(n => n % 2, [1, 2, 3, 4])
+filter(n => n % 2, (function *() {
+  yield 1;
+  yield 2;
+  yield 3;
+  yield 4;
+  yield 5;
+})())
