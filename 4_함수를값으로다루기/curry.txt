@@ -1,0 +1,55 @@
+# 입력된 함수를 원하는 타이밍에 평가해주는 함수
+# 함수 => 함수
+
+# 부분적용을 시전한다.
+# 여러개면 바로 적용
+# 인자가 하나면 다음 인자를 기다림
+
+const curry = 
+  f => 
+    (a, ..._) =>  
+      _.length ? 
+        f(a, ..._) : 
+        (..._) => f(a, ..._)
+
+const mult = curry((a, b) => a * b)
+mult(1)(2)
+mult(3)(2)
+const mult3 = mult(3)
+
+
+const map = curry((f, iter) => {
+  let res = []
+  for(const a of iter) {
+    res.push(f(a))
+  }
+  return res
+}) 
+
+const filter = curry((f, iter) => {
+  const result = []
+  for(const a of iter) {
+    f(a) ? result.push(a) : null     
+  }
+  return result
+})
+
+const reduce = curry((f, acc, iter) => {
+  if(!iter) {
+    iter = acc[Symbol.iterator]()
+    acc = iter.next().value;
+  }
+  
+  for(const a of iter) {
+    acc = f(acc, a)  
+  }
+  return acc   
+}) 
+
+go(
+  products,
+  filter(p => p.price < 20000),
+  map((p) => p.price),
+  reduce(add)
+)
+// 커링을 통해 인자 전달을 생략 가능해짐

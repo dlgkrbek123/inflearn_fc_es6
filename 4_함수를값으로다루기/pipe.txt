@@ -1,0 +1,20 @@
+# 합성된 함수를 만드는 함수
+- 내부적으로 go를 활용한다.
+- 입력을 받는 타이밍을 지연시킴
+
+const f = pipe(
+  a => a + 1, 
+  a => a + 10,
+  a => a + 100,
+)
+
+const pipe = (...args) => (input) => reduce(
+  (a, f) => f(a),
+  input,
+  args
+)
+
+const pipe = (f, ...fs) => (...as) => go(
+  f(...as),
+  ...fs
+)

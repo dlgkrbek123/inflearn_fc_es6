@@ -1,0 +1,27 @@
+# 함수를 조합해서 중복을 줄여보자
+# 고차 함수를 이용해 함수를 잘게 쪼개서 중복 제거
+
+const totalPrice = pipe(
+  map(p => p.price),
+  reduce(add)
+)
+
+const baseTotalPrice = predi => pipe(
+  filter(predi),
+  totalPrice
+)
+
+go(
+  products,
+  baseTotalPrice(p => p.pirce < 20000),
+  log
+)
+
+go(
+  products,
+  baseTotalPrice,
+  log
+)
+
+
+
